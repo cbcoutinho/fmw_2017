@@ -50,7 +50,7 @@ program fd1d_heat_explicit_prb
   x_min = 0.0_DP
   x_max = 1.0_DP
   ! x_num is the number of intervals in the x-direction
-  call r8vec_linspace( x_num, x_min, x_max, x )
+  call r8vec_linspace( x_min, x_max, x )
 
   ! the t-range values. integrate from t_min to t_max
   t_min = 0.0_DP
@@ -58,7 +58,7 @@ program fd1d_heat_explicit_prb
 
   ! t_num is the number of intervals in the t-direction
   dt = ( t_max - t_min ) / dble( t_num - 1 )
-  call r8vec_linspace( t_num, t_min, t_max, t )
+  call r8vec_linspace( t_min, t_max, t )
 
   ! get the CFL coefficient
   call fd1d_heat_explicit_cfl( k, t_num, t_min, t_max, x_num, x_min, x_max, cfl )
@@ -97,7 +97,7 @@ program fd1d_heat_explicit_prb
 
   ! write data to files
   call r8mat_write( 'h_test01.txt', hmat )
-  call r8vec_write( 't_test01.txt', t_num, t )
-  call r8vec_write( 'x_test01.txt', x_num, x )
+  call r8vec_write( 't_test01.txt', t )
+  call r8vec_write( 'x_test01.txt', x )
 
 end program fd1d_heat_explicit_prb

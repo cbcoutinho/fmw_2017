@@ -2,10 +2,10 @@ FFLAGS = -g -O0
 FF := gfortran
 RM := rm -rf
 
-all: clean main
-	./main.exe
+all: clean main2
+	./main2.exe
 
-main: fd1d_heat_explicit.o mod_types.o mod_helper.o
+main2: fd1d_heat_explicit.o mod_types.o mod_helper.o
 	$(FF) $^ -o $@
 
 fd1d_heat_explicit.o: fd1d_heat_explicit.f90 mod_types.o mod_helper.o
@@ -18,4 +18,4 @@ mod_helper.o: mod_helper.f90 mod_types.o
 	$(FF) -c $< -o $@
 
 clean:
-	$(RM) *.mod *.o
+	$(RM) *.mod *.o *.exe *.txt

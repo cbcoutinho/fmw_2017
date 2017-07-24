@@ -5,7 +5,6 @@ module mod_helper
 contains
 
   function func( j, x ) result ( d )
-    implicit none
 
     integer(kind=SI), intent(in) :: j
     real(kind=DP), intent(in) :: x(:)
@@ -18,14 +17,13 @@ contains
   end function func
 
   subroutine fd1d_heat_explicit( x, t, dt, cfl, h, h_new )
-    implicit none
 
     real(kind=DP), intent(in) :: cfl
     real(kind=DP), intent(in) :: dt
-    real(kind=DP), intent(in) :: h(:)
-    real(kind=DP), intent(out) :: h_new(:)
     real(kind=DP), intent(in) :: t
+    real(kind=DP), intent(in) :: h(:)
     real(kind=DP), intent(in) :: x(:)
+    real(kind=DP), intent(out) :: h_new(:)
 
     integer(kind=SI) :: j
     real(kind=DP), allocatable :: f(:)
@@ -44,8 +42,6 @@ contains
   end subroutine fd1d_heat_explicit
 
   subroutine fd1d_heat_explicit_cfl( k, t_num, t_min, t_max, x_num, x_min, x_max, cfl )
-
-    implicit none
 
     real(kind=DP), intent(in) :: k
     real(kind=DP), intent(in) :: t_max
@@ -67,62 +63,74 @@ contains
     write ( *, '(a)' ) ' '
     write ( *, '(a,g14.6)' ) '  CFL stability criterion value = ', cfl
 
+    return
   end subroutine fd1d_heat_explicit_cfl
 
   subroutine r8mat_write( output_filename, table )
-    implicit none
-
 
     integer(kind=SI) :: j
-    character * ( * ) :: output_filename
+    character (len=*) :: output_filename
     integer(kind=SI) :: output_unit_id
-    character * ( 30 ) :: string
+    character (len=30) :: string
     real(kind=DP) :: table(:,:)
 
-    integer(kind=SI) :: m
-    integer(kind=SI) :: n
+    integer(kind=SI) :: m, n, err
     m = size(table,1)
     n = size(table,2)
 
-    output_unit_id = 10
-    open( unit = output_unit_id, file = output_filename, status = 'replace' )
+    output_unit_id = 100
+    open( unit = output_unit_id, file = output_filename, status = 'replace' , iostat=err)
+    if ( err /= 0 ) then
+      print *, 'Error opening output file, ' // trim(output_filename)
+      print *, 'Error code: ', err
+      stop
+    endif
 
-    write ( string, '(a1,i8,a1,i8,a1,i8,a1)' ) '(', m, 'g', 24, '.', 16, ')'
+    write ( string, '(a1,i8,a1,i8,a1,i8,a1)', iostat=err ) '(', m, 'g', 24, '.', 16, ')'
+    if ( err /= 0 ) then
+      print*, 'Error writing to string'
+    endif
 
     do j = 1, n
-      write ( output_unit_id, string ) table(1:m, j)
+      write ( output_unit_id, string, iostat=err) table(1:m, j)
+      ! print*, table(1:m,j)
+      if ( err /= 0 ) then
+        print*, 'Error writing to string'
+      endif
     end do
 
-    close( unit = output_unit_id )
+    close( unit = output_unit_id, iostat=err)
+    if ( err /= 0 ) then
+      print*, 'Close encountered an error closing output'
+    end if
   end subroutine r8mat_write
 
-  subroutine r8vec_linspace ( n, a_first, a_last, a )
+  subroutine r8vec_linspace ( a_first, a_last, a )
 
-    implicit none
-
-    integer(kind=SI) :: n
-    real(kind=DP) :: a(n)
+    real(kind=DP) :: a(:)
     real(kind=DP) :: a_first
     real(kind=DP) :: a_last
     integer(kind=SI) :: i
+
+    integer(kind=SI) :: n
+    n = size(a, 1)
 
     do i = 1, n
       a(i) = ( dble( n - i ) * a_first + dble( i - 1 ) * a_last ) / dble( n - 1 )
     end do
 
+    return
   end subroutine r8vec_linspace
 
-  subroutine r8vec_write ( output_filename, n, x )
-
-    implicit none
-
-    integer(kind=SI) :: m
-    integer(kind=SI) :: n
+  subroutine r8vec_write ( output_filename, x )
 
     integer(kind=SI) :: j
-    character * ( * ) :: output_filename
+    character(len=*) :: output_filename
     integer(kind=SI) :: output_unit_id
-    real(kind=DP) :: x(n)
+    real(kind=DP) :: x(:)
+
+    integer(kind=SI) :: n
+    n = size(x,1)
 
     output_unit_id = 11
     open( unit = output_unit_id, file = output_filename, status = 'replace' )
@@ -132,6 +140,8 @@ contains
     end do
 
     close ( unit = output_unit_id )
+
+    return
   end subroutine r8vec_write
 
 end module mod_helper
