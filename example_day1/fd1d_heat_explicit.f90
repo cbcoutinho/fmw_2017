@@ -2,6 +2,7 @@ program fd1d_heat_explicit_prb
   use mod_types
   use mod_io
   use mod_cfl
+  use mod_solver
   implicit none
 
   integer(kind=SI), parameter :: t_num = 201
