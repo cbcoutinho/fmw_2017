@@ -1,6 +1,7 @@
 program fd1d_heat_explicit_prb
   use mod_types
-  use mod_helper
+  use mod_io
+  use mod_cfl
   implicit none
 
   integer(kind=SI), parameter :: t_num = 201
@@ -13,8 +14,8 @@ program fd1d_heat_explicit_prb
   ! the "matrix" stores all x-values for all t-values
   ! remember Fortran is column major, meaning that rows are contiguous
   real(kind=DP) :: hmat(x_num, t_num)
-  integer(kind=SI) ::i
-  integer(kind=SI) ::j
+  integer(kind=SI) :: i
+  integer(kind=SI) :: j
   real(kind=DP) :: k
 
   real(kind=DP) :: t(t_num)
