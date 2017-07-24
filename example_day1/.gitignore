@@ -1,3 +1,7 @@
 main*
 *.o
 *.mod
+
+x_test01.txt
+h_test01.txt
+t_test01.txt
