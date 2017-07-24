@@ -1,29 +1,29 @@
 program fd1d_heat_explicit_prb
-
+  use mod_types
       implicit none
 
-      integer t_num
+      integer(kind=SI) ::t_num
       parameter ( t_num = 201 )
-      integer x_num
+      integer(kind=SI) ::x_num
       parameter ( x_num = 21 )
-      
-      double precision cfl
-      double precision dt
-      double precision h(x_num)
-      double precision h_new(x_num)
+
+      real(DP) :: cfl
+      real(DP) :: dt
+      real(DP) :: h(x_num)
+      real(DP) :: h_new(x_num)
       ! the "matrix" stores all x-values for all t-values
       ! remember Fortran is column major, meaning that rows are contiguous
-      double precision hmat(x_num, t_num)
-      integer i
-      integer j
-      double precision k
+      real(DP) :: hmat(x_num, t_num)
+      integer(kind=SI) ::i
+      integer(kind=SI) ::j
+      real(DP) :: k
 
-      double precision :: t(t_num)
-      double precision :: t_max
-      double precision :: t_min
-      double precision :: x(x_num)
-      double precision :: x_max
-      double precision :: x_min
+      real(DP) :: t(t_num)
+      real(DP) :: t_max
+      real(DP) :: t_min
+      real(DP) :: x(x_num)
+      real(DP) :: x_max
+      real(DP) :: x_min
 
       write ( *, '(a)' ) ' '
       write ( *, '(a)' ) 'FD1D_HEAT_EXPLICIT_PRB:'
@@ -86,7 +86,7 @@ program fd1d_heat_explicit_prb
         hmat(i, 1) = h(i)
       end do
 
-      ! the main time integration loop 
+      ! the main time integration loop
       do j = 2, t_num
         call fd1d_heat_explicit( x_num, x, t(j-1), dt, cfl, h, h_new )
 
@@ -105,10 +105,10 @@ program fd1d_heat_explicit_prb
 
     function func( j, x_num, x ) result ( d )
       implicit none
-      
-      integer :: j, x_num
-      double precision :: d
-      double precision :: x(x_num)
+
+      integer(kind=SI) :: j, x_num
+      real(DP) :: d
+      real(DP) :: x(x_num)
 
       d = 0.0D+00
     end function func
@@ -116,16 +116,16 @@ program fd1d_heat_explicit_prb
     subroutine fd1d_heat_explicit( x_num, x, t, dt, cfl, h, h_new )
       implicit none
 
-      integer :: x_num
+      integer(kind=SI) :: x_num
 
-      double precision :: cfl
-      double precision :: dt
-      double precision :: h(x_num)
-      double precision :: h_new(x_num)
-      integer :: j
-      double precision :: t
-      double precision :: x(x_num)
-      double precision :: f(x_num)
+      real(DP) :: cfl
+      real(DP) :: dt
+      real(DP) :: h(x_num)
+      real(DP) :: h_new(x_num)
+      integer(kind=SI) :: j
+      real(DP) :: t
+      real(DP) :: x(x_num)
+      real(DP) :: f(x_num)
 
       do j = 1, x_num
         f(j) = func( j, x_num, x )
@@ -146,16 +146,16 @@ program fd1d_heat_explicit_prb
 
       implicit none
 
-      double precision :: cfl
-      double precision :: dx
-      double precision :: dt
-      double precision :: k
-      double precision :: t_max
-      double precision :: t_min
-      integer :: t_num
-      double precision :: x_max
-      double precision :: x_min
-      integer :: x_num
+      real(DP) :: cfl
+      real(DP) :: dx
+      real(DP) :: dt
+      real(DP) :: k
+      real(DP) :: t_max
+      real(DP) :: t_min
+      integer(kind=SI) :: t_num
+      real(DP) :: x_max
+      real(DP) :: x_min
+      integer(kind=SI) :: x_num
 
       dx = ( x_max - x_min ) / dble( x_num - 1 )
       dt = ( t_max - t_min ) / dble( t_num - 1 )
@@ -170,15 +170,15 @@ program fd1d_heat_explicit_prb
     subroutine r8mat_write( output_filename, m, n, table )
       implicit none
 
-      integer :: m
-      integer :: n
+      integer(kind=SI) :: m
+      integer(kind=SI) :: n
 
-      integer :: j
+      integer(kind=SI) :: j
       character * ( * ) :: output_filename
-      integer :: output_unit_id
-      character * ( 30 ) :: string 
-      double precision :: table(m,n)
- 
+      integer(kind=SI) :: output_unit_id
+      character * ( 30 ) :: string
+      real(DP) :: table(m,n)
+
       output_unit_id = 10
       open( unit = output_unit_id, file = output_filename, status = 'replace' )
 
@@ -195,11 +195,11 @@ program fd1d_heat_explicit_prb
 
       implicit none
 
-      integer :: n
-      double precision :: a(n)
-      double precision :: a_first
-      double precision :: a_last
-      integer :: i
+      integer(kind=SI) :: n
+      real(DP) :: a(n)
+      real(DP) :: a_first
+      real(DP) :: a_last
+      integer(kind=SI) :: i
 
       do i = 1, n
         a(i) = ( dble( n - i ) * a_first + dble( i - 1 ) * a_last ) / dble( n - 1 )
@@ -211,13 +211,13 @@ program fd1d_heat_explicit_prb
 
       implicit none
 
-      integer :: m
-      integer :: n
+      integer(kind=SI) :: m
+      integer(kind=SI) :: n
 
-      integer :: j
+      integer(kind=SI) :: j
       character * ( * ) :: output_filename
-      integer :: output_unit_id
-      double precision :: x(n)
+      integer(kind=SI) :: output_unit_id
+      real(DP) :: x(n)
 
       output_unit_id = 11
       open( unit = output_unit_id, file = output_filename, status = 'replace' )
@@ -230,4 +230,3 @@ program fd1d_heat_explicit_prb
   end subroutine r8vec_write
 
 end program fd1d_heat_explicit_prb
-
