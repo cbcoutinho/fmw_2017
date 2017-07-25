@@ -32,4 +32,4 @@ mod_rhs.o: mod_rhs.f90 mod_types.o
 	$(FF) -c $< -o $@
 
 clean:
-	$(RM) *.mod *.o *.exe *.txt
+	$(RM) *.mod *.o *.obj *.exe *.txt
