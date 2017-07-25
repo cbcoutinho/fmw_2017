@@ -31,5 +31,6 @@ mod_cfl.o: mod_cfl.f90 mod_types.o
 mod_rhs.o: mod_rhs.f90 mod_types.o
 	$(FF) -c $< -o $@
 
+.PHONY: clean
 clean:
 	$(RM) *.mod *.o *.obj *.exe *.txt

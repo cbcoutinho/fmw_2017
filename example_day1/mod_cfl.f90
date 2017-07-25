@@ -1,9 +1,9 @@
 module mod_cfl
-  use mod_types
+  use mod_types, only: SI, DP
   implicit none
 
 contains
-  
+
   subroutine fd1d_heat_explicit_cfl( k, t_num, t_min, t_max, x_num, x_min, x_max, cfl )
 
     real(kind=DP), intent(in) :: k

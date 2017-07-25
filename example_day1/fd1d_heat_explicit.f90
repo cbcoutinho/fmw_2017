@@ -1,8 +1,8 @@
 program fd1d_heat_explicit_prb
-  use mod_types
-  use mod_io
-  use mod_cfl
-  use mod_solver
+  use mod_types, only: SI, DP
+  use mod_io, only: r8mat_write, r8vec_write, r8vec_linspace
+  use mod_cfl, only: fd1d_heat_explicit_cfl
+  use mod_solver, only: fd1d_heat_explicit
   implicit none
 
   integer(kind=SI), parameter :: t_num = 201
@@ -56,7 +56,7 @@ program fd1d_heat_explicit_prb
 
   ! the t-range values. integrate from t_min to t_max
   t_min = 0.0_DP
-  t_max = 100.0_DP
+  t_max = 80.0_DP
 
   ! t_num is the number of intervals in the t-direction
   dt = ( t_max - t_min ) / dble( t_num - 1 )

@@ -1,6 +1,6 @@
 module mod_solver
-  use mod_types
-  use mod_rhs
+  use mod_types, only: SI, DP
+  use mod_rhs, only: func
   implicit none
 
 contains

@@ -1,5 +1,5 @@
 module mod_rhs
-  use mod_types
+  use mod_types, only: SI, DP
   implicit none
 
 contains
