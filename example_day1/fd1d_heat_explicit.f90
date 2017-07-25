@@ -56,7 +56,7 @@ program fd1d_heat_explicit_prb
 
   ! the t-range values. integrate from t_min to t_max
   t_min = 0.0_DP
-  t_max = 80.0_DP
+  t_max = 100.0_DP
 
   ! t_num is the number of intervals in the t-direction
   dt = ( t_max - t_min ) / dble( t_num - 1 )
@@ -74,9 +74,10 @@ program fd1d_heat_explicit_prb
   end if
 
   ! set the initial condition
-  do j = 1, x_num
-    h(j) = 50.0_DP
-  end do
+  ! do j = 1, x_num
+  !   h(j) = 50.0_DP
+  ! end do
+  h(:) = 50.0_DP
 
   ! set the bounday condition
   h(1) = 90.0_DP

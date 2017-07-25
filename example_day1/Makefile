@@ -7,6 +7,9 @@ objects = mod_io.o mod_types.o mod_rhs.o mod_cfl.o mod_solver.o
 all: clean main2
 	./main2.exe
 
+plot: all
+	python main.py
+
 main2: fd1d_heat_explicit.o $(objects)
 	$(FF) $^ -o $@
 
