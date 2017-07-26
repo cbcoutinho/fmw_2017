@@ -1,4 +1,4 @@
-main*
+*.exe
 *.o
 *.obj
 *.mod
