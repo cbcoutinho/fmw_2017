@@ -11,7 +11,7 @@ plot: all
 	python main.py
 
 main2: fd1d_heat_explicit.o $(objects)
-	$(FF) $^ -o $@
+	$(FF) $^ -o $@.exe
 
 fd1d_heat_explicit.o: fd1d_heat_explicit.f90 $(objects)
 	$(FF) -c $< -o $@
